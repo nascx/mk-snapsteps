@@ -30,7 +30,11 @@ export const linksEng = [
     {
         label: 'Incializar lista',
         url: `${host}/eng/list-upload`
-    }
+    },
+    {
+        label: 'Visualizar IT',
+        url: `${host}/eng/get-pdf`
+    },
 ]
 
 export const linksSGI = [

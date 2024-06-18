@@ -24,7 +24,7 @@ export const convertExcelToJson = (listPath: string, line: string) => {
         const product: string = jsonData[1].pm
         jsonData[2].pm = line
         const content = JSON.stringify(jsonData)        
-        return { model, product, content }
+        return { model, product, content, line }
     } catch (error) {
         console.log({ message: 'Error to convert excel to json', errorMessage: error })
     }

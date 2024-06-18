@@ -82,6 +82,7 @@ export const sendPdf = async (req: Request, res: Response) => {
             }
 
             const pdf = await newPdfDoc.save();
+            console.log('finalizou')
 
             // Envia o novo documento PDF como resposta
             res.setHeader('Content-Type', 'application/pdf');

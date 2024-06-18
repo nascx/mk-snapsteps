@@ -98,6 +98,7 @@ export const uploadProductionLists = async (req: Request, res: Response) => {
         res.status(200).json('Operação concluída com sucesso!')
     } catch (error) {
         res.status(500).json(error)
+        console.log(error)
     }
 }
 
