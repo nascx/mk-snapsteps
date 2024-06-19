@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { convertExcelToJson } from '../commonFunctions/convertExcelToJson'
+import { convertExcelToJson, convertExcelToJsonWithoutAlterLine } from '../commonFunctions/convertExcelToJson'
 
 import path from 'node:path'
 
@@ -20,13 +20,15 @@ export const createList = async (req: Request, res: Response) => {
         // prgando o caminho do arquivo que foi enviado
         const filePath: string = path.join(__dirname, `../../00_engineering_lists/${req.file?.originalname}`)
         // convertendo o conteúdo do arquivo em json
-        const jsonData = convertExcelToJson(filePath, '0')
+        const jsonData = convertExcelToJsonWithoutAlterLine(filePath)
         // pegando o modelo desse conteúdo
         const model: string = jsonData?.model ?? 'error'
         // pegando o produto desse conteúdo
         const product: string = jsonData?.product ?? 'error'
         // pegando o conteúdo de instruções
         const content: string = jsonData?.content ?? 'error'
+        //pegando o conteúdo da linha
+        const line: string = jsonData?.line ?? 'error'
         // procurando se existe uma lista na tabela de listas de engenharia com esse modelo e produto
         const existListEng = await exsitsThisListIEngineeringLists(model as string, product as string)
         if (existListEng) {

@@ -25,7 +25,7 @@ export const generateObs = async (operations: string) => {
     });
     
     // Adiciona o texto à página
-    page.drawText(`${operations}`, {
+    page.drawText(`Operações: ${operations}`, {
         x: 842 / 6,
         y: 595 / 2,
         size: fontSize,
