@@ -39,16 +39,6 @@ export const createList = async (req: Request, res: Response) => {
             await insertListInEngineeringLists( model, product, content)
         }
         // procurando se existe já existe uma lista na tabela de lista de produção com modelo e produto
-        const existListProd = await exsitsListsWithThisModelAndProductInProductionLists(model, product) as { status: boolean, content: { line: string }[] }
-        // se exitir atualiza cada um dessas listas
-        if (existListProd.status) {
-            existListProd.content.forEach((list: { line: string }) => {
-                const json = convertExcelToJson(filePath, list.line)
-                updateContentInProductionLists(json?.content as string, model, product, list.line)
-            })
-        } else {
-            console.log(existListProd)
-        }
         fs.unlink(filePath, (err) => {
             if (err) {
                 console.log('Erro ao excluir o arquivo!')
