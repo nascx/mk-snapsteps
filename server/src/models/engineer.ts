@@ -25,11 +25,11 @@ export const exsitsThisListIEngineeringLists = (model: string, product: string) 
 }
 
 // para inserir uma lista na tabela de listas da engenharia
-export const insertListInEngineeringLists = ( model: string, product: string, content: string) => {
+export const insertListInEngineeringLists = ( model: string, product: string, content: string, line: string) => {
     try {
         return new Promise(async (resolve, reject) => {
-            const q = 'INSERT INTO engineering_lists ( model, product, content) VALUES (?, ?, ?)'
-            const values = [ model, product, content]
+            const q = 'INSERT INTO engineering_lists ( model, product, content, line) VALUES (?, ?, ?, ?)'
+            const values = [ model, product, content, line]
             await db.query(q, values, (err, data) => {
                 if (err) {
                     console.log('Erro ao inserir uma lista na tabela de listas da engenharia!', err)
@@ -50,11 +50,11 @@ export const insertListInEngineeringLists = ( model: string, product: string, co
 }
 
 // para atualizar os dados de uma lista que está na tabela de listas de engenharia 
-export const updateListInEngineeringLists = ( model: string, product: string, content: string) => {
+export const updateListInEngineeringLists = ( model: string, product: string, content: string, line: string) => {
     try {
         return new Promise(async (resolve, reject) => {
-            const q = 'UPDATE engineering_lists SET content = ? WHERE model = ? AND product = ?'
-            const values = [content, model, product]
+            const q = 'UPDATE engineering_lists SET content = ? WHERE model = ? AND product = ? AND line = ?'
+            const values = [content, model, product, line]
             await db.query(q, values, (err, data) => {
                 if (err) {
                     console.log('Erro ao atualizar uma lista na tabela de listas da engenharia!', err)

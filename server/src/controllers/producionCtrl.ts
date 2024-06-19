@@ -67,7 +67,7 @@ export const getModelProductOptionsAndLine = async (req: Request, res: Response)
 export const uploadProductionLists = async (req: Request, res: Response) => {
     try {
         // pegando o caminho do arquivo 
-        const filePath: string = path.join(__dirname, `../../00_production_lists/${req.file?.originalname}`)
+        const filePath: string = path.join(__dirname, `../00_production_lists/${req.file?.originalname}`)
         // convertendo o conteúdo do arquivo em json
         const jsonData = convertExcelToJsonWithoutAlterLine(filePath)
         // pegando o modelo desse conteúdo

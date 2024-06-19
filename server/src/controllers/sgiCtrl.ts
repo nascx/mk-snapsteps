@@ -18,7 +18,7 @@ export const handleUploadIT = async (req: Request, res: Response) => {
     try {
         //pegando o caminho da IT
         const name = removeFileExtension(req?.file?.filename as string)
-        const filePath: string = path.join(__dirname, `../../_its/${req.file?.originalname}`)
+        const filePath: string = path.join(__dirname, `../_its/${req.file?.originalname}`)
         //pesquisando se já existe esse arquivo salvo na base de dados
         const it = await existsThisIT(filePath) as { status: boolean }
         // se não exsitir deve inserir
@@ -88,15 +88,15 @@ const getInfosFromQAFile = async (filePath: string, excelPath: string) => {
 
 export const handleUploadQualityFile = async (req: Request, res: Response) => {
     try {
-        const orginalPath: string = path.join(__dirname, `../../_quality/${req.file?.originalname}`)
+        const orginalPath: string = path.join(__dirname, `../_quality/${req.file?.originalname}`)
 
-        const excelPath: string = path.join(__dirname, `../../_excels/${'teste.xlsx'}`)
+        const excelPath: string = path.join(__dirname, `../_excels/${'teste.xlsx'}`)
 
         const { code, title } = await getInfosFromQAFile(orginalPath, excelPath) as { code: string, title: string }
 
         const qaFile = await existsThisQAFile(code) as {status: boolean}
 
-        const filePath: string = path.join(__dirname, `../../_quality/${code}.pdf`)
+        const filePath: string = path.join(__dirname, `../_quality/${code}.pdf`)
 
         fs.renameSync(orginalPath, filePath)
 

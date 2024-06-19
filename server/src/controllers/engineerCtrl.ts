@@ -18,7 +18,7 @@ export const createList = async (req: Request, res: Response) => {
     try {
         console.log('Função chamada!')
         // prgando o caminho do arquivo que foi enviado
-        const filePath: string = path.join(__dirname, `../../00_engineering_lists/${req.file?.originalname}`)
+        const filePath: string = path.join(__dirname, `../00_engineering_lists/${req.file?.originalname}`)
         // convertendo o conteúdo do arquivo em json
         const jsonData = convertExcelToJsonWithoutAlterLine(filePath)
         // pegando o modelo desse conteúdo
@@ -33,10 +33,10 @@ export const createList = async (req: Request, res: Response) => {
         const existListEng = await exsitsThisListIEngineeringLists(model as string, product as string)
         if (existListEng) {
             // se já existir deve ser atualizada
-            await updateListInEngineeringLists( model, product, content)
+            await updateListInEngineeringLists( model, product, content, line)
         } else {
             // se não deve ser inserida
-            await insertListInEngineeringLists( model, product, content)
+            await insertListInEngineeringLists( model, product, content, line)
         }
         // procurando se existe já existe uma lista na tabela de lista de produção com modelo e produto
         fs.unlink(filePath, (err) => {
