@@ -18,7 +18,7 @@ export const createList = async (req: Request, res: Response) => {
     try {
         console.log('Função chamada!')
         // prgando o caminho do arquivo que foi enviado
-        const filePath: string = path.join(__dirname, `/00_engineering_lists/${req.file?.originalname}`)
+        const filePath: string = path.resolve(__dirname, `../../00_engineering_lists/${req.file?.originalname}`)
         // convertendo o conteúdo do arquivo em json
         const jsonData = convertExcelToJsonWithoutAlterLine(filePath)
         // pegando o modelo desse conteúdo
@@ -39,6 +39,16 @@ export const createList = async (req: Request, res: Response) => {
             await insertListInEngineeringLists( model, product, content, line)
         }
         // procurando se existe já existe uma lista na tabela de lista de produção com modelo e produto
+        const existListProd = await exsitsListsWithThisModelAndProductInProductionLists(model, product) as { status: boolean, content: { line: string }[] }
+        // se exitir atualiza cada um dessas listas
+        if (existListProd.status) {
+            existListProd.content.forEach((list: { line: string }) => {
+                const json = convertExcelToJson(filePath, list.line)
+                updateContentInProductionLists(json?.content as string, model, product, list.line)
+            })
+        } else {
+            console.log(existListProd)
+        }
         fs.unlink(filePath, (err) => {
             if (err) {
                 console.log('Erro ao excluir o arquivo!')

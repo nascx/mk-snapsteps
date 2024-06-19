@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import { searchQAFiles } from "../models/quality";
-import fs from 'node:fs'
 export const sendQAFilesOptions = async (req: Request, res: Response) => {
     try {
         const { value } = req.query
