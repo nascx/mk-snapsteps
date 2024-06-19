@@ -49,7 +49,7 @@ snapsteps.get('/qa/view-it', sendQAFile)
 
 snapsteps.get('/auth', credentialCheck)
 
-const port = process.env.PORT
+const port = process.env.PORT || 18000
 
 snapsteps.listen(port, () => {
     console.log('Server listen in ', port, 'port')
