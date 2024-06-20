@@ -6,7 +6,7 @@ import path from 'path'
 // para salvar as listas de engenharia
 const storageEngineeringList = multer.diskStorage({
     destination: (req, file, callback) => {
-        const filePath : string = path.resolve(__dirname, '../../00_engineering_lists')
+        const filePath : string = path.join(__dirname, '../../00_engineering_lists')
         callback(null, filePath)
     },
     filename: function (req, file, callback) {
@@ -20,7 +20,7 @@ export const uploadEngineeringLists = multer( { storage : storageEngineeringList
 // para salvar as listas de produção
 const storageProductionList = multer.diskStorage({
     destination: (req, file, callback) => {
-        const filePath : string = path.resolve(__dirname, '../../00_production_lists')
+        const filePath : string = path.join(__dirname, '../../00_production_lists')
         callback(null, filePath)
     },
     filename: function (req, file, callback) {
@@ -34,7 +34,7 @@ export const uploadProductionListsMulter = multer( { storage : storageProduction
 // para salvar as IT'S
 const storageIT = multer.diskStorage({
     destination: (req, file, callback) => {
-        const filePath : string = path.resolve(__dirname, '../../_its')
+        const filePath : string = path.join(__dirname, '../../_its')
         callback(null, filePath)
     },
     filename: function (req, file, callback) {
@@ -48,7 +48,7 @@ export const uploadIT = multer( { storage : storageIT })
 // Para salvar os arquivos da qualidade
 const storageQuality = multer.diskStorage({
     destination: (req, file, callback) => {
-        const filePath : string = path.resolve(__dirname, '../../_quality')
+        const filePath : string = path.join(__dirname, '../../_quality')
         callback(null, filePath)
     },
     filename: function (req, file, callback) {
