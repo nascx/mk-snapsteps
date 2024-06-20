@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "tsx --watch src/snapsteps.ts",
     "connection-db": "tsx --watch src/config/db.ts",
