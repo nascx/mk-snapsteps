@@ -19,6 +19,8 @@ export const createList = async (req: Request, res: Response) => {
         console.log('Função chamada!')
         // prgando o caminho do arquivo que foi enviado
         const filePath: string = path.resolve(__dirname, `../../00_engineering_lists/${req.file?.originalname}`)
+
+        console.log(filePath)
         // convertendo o conteúdo do arquivo em json
         const jsonData = convertExcelToJsonWithoutAlterLine(filePath)
         // pegando o modelo desse conteúdo
