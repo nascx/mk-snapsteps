@@ -7,6 +7,7 @@ import path from 'path'
 const storageEngineeringList = multer.diskStorage({
     destination: (req, file, callback) => {
         const filePath : string = path.join(__dirname, '../../00_engineering_lists')
+        console.log('Função chamada!')
         callback(null, filePath)
     },
     filename: function (req, file, callback) {
