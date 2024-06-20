@@ -22,6 +22,7 @@ export const uploadEngineeringLists = multer( { storage : storageEngineeringList
 const storageProductionList = multer.diskStorage({
     destination: (req, file, callback) => {
         const filePath : string = path.join(__dirname, '../../00_production_lists')
+        console.log('Chamado no multer: ', filePath)
         callback(null, filePath)
     },
     filename: function (req, file, callback) {
