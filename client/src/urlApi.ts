@@ -1,2 +1,2 @@
-export const urlAPi = 'http://10.12.100.153:4322'
-export const host = 'http://10.12.100.153:5433'
+export const urlAPi = 'http://172.25.124.116:4322'
+export const host = 'http://172.25.124.116:3000'

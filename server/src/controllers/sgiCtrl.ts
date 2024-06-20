@@ -88,15 +88,16 @@ const getInfosFromQAFile = async (filePath: string, excelPath: string) => {
 
 export const handleUploadQualityFile = async (req: Request, res: Response) => {
     try {
-        const orginalPath: string = path.join(__dirname, `../_quality/${req.file?.originalname}`)
+        console.log('função chamada!')
+        const orginalPath: string = path.join(__dirname, `../../_quality/${req.file?.originalname}`)
 
-        const excelPath: string = path.join(__dirname, `../_excels/${'teste.xlsx'}`)
+        const excelPath: string = path.join(__dirname, `../../_excels/${'teste.xlsx'}`)
 
         const { code, title } = await getInfosFromQAFile(orginalPath, excelPath) as { code: string, title: string }
 
         const qaFile = await existsThisQAFile(code) as {status: boolean}
 
-        const filePath: string = path.join(__dirname, `../_quality/${code}.pdf`)
+        const filePath: string = path.join(__dirname, `../../_quality/${code}.pdf`)
 
         fs.renameSync(orginalPath, filePath)
 
