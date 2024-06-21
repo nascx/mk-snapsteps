@@ -1,55 +1,39 @@
 "use strict";
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateCover = void 0;
+const pdf_lib_1 = require("pdf-lib");
+// para gerar capa por posto
+const generateCover = async (post) => {
+    // Cria um novo documento PDF
+    const pdfDoc = await pdf_lib_1.PDFDocument.create();
+    // Define o tamanho da página para paisagem (landscape)
+    const page = pdfDoc.addPage([842, 595]); // A4 landscape size in points (width, height)
+    // Carrega uma fonte
+    const font = await pdfDoc.embedFont(pdf_lib_1.StandardFonts.CourierBold);
+    const fontSize = 80;
+    // Obtém as dimensões da página
+    const { width, height } = page.getSize();
+    // Calcula a posição do texto centralizado
+    const textWidth = font.widthOfTextAtSize(`Posto ${post}`, fontSize);
+    const textHeight = fontSize;
+    const x = (width - textWidth) / 2;
+    const y = (height - textHeight) / 2;
+    // Adiciona o texto à página
+    page.drawText(`Grupo MK`, {
+        x,
+        y: 510,
+        size: 60,
+        font,
+    });
+    // Adiciona o texto à página
+    page.drawText(`Posto ${post}`, {
+        x,
+        y,
+        size: fontSize,
+        font,
+    });
+    // Salva o documento PDF em um array de bytes
+    const pdfBytes = await pdfDoc.save();
+    return pdfBytes;
 };
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-
-// src/views/generateCover.ts
-var generateCover_exports = {};
-__export(generateCover_exports, {
-  generateCover: () => generateCover
-});
-module.exports = __toCommonJS(generateCover_exports);
-var import_pdf_lib = require("pdf-lib");
-var generateCover = async (post) => {
-  const pdfDoc = await import_pdf_lib.PDFDocument.create();
-  const page = pdfDoc.addPage([842, 595]);
-  const font = await pdfDoc.embedFont(import_pdf_lib.StandardFonts.CourierBold);
-  const fontSize = 80;
-  const { width, height } = page.getSize();
-  const textWidth = font.widthOfTextAtSize(`Posto ${post}`, fontSize);
-  const textHeight = fontSize;
-  const x = (width - textWidth) / 2;
-  const y = (height - textHeight) / 2;
-  page.drawText(`Grupo MK`, {
-    x,
-    y: 510,
-    size: 60,
-    font
-  });
-  page.drawText(`Posto ${post}`, {
-    x,
-    y,
-    size: fontSize,
-    font
-  });
-  const pdfBytes = await pdfDoc.save();
-  return pdfBytes;
-};
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  generateCover
-});
+exports.generateCover = generateCover;
