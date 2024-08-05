@@ -9,7 +9,6 @@ const pdf2excel = require('pdf-to-excel')
 //importação da biblioteca para converter excel em json
 const excel2json = require('convert-excel-to-json')
 
-
 function removeFileExtension(filename: string) {
     return filename.replace(/\.[^/.]+$/, "");
 }
@@ -34,82 +33,109 @@ export const handleUploadIT = async (req: Request, res: Response) => {
 }
 
 const getInfosFromQAFile = async (filePath: string, excelPath: string) => {
-    //criando o arquivo excel
-    await pdf2excel.genXlsx(filePath, excelPath)
+    try {
 
-    //convertendo o excel em json
-    const json = await excel2json({ sourceFile: excelPath, header: { rows: 1 } })
+        /* const pdf = require('pdf-parse');
+        const XLSX = require('xlsx');
 
-    //obtendo as informções do json
-    const jsonInfos: { A: string }[] = json.Sheet1
+        // Leitura do arquivo PDF 
+        let dataBuffer = fs.readFileSync(filePath);
+ 
+        pdf(dataBuffer).then(data => {
+            // Aqui, 'data.text' contém o texto extraído do PDF
+            let lines = data.text.split('\n');
+            let worksheet = XLSX.utils.aoa_to_sheet(lines.map(line => [line]));
+            let workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
-    // pegando o objeto aonde estão as informações de título
-    const titleJson: { [key: string]: string } = jsonInfos[1]
+            // Salvando o arquivo Excel
+            XLSX.writeFile(workbook, excelPath);
+            console.log('Arquivo Excel criado com sucesso!');
+        }); */
 
-    // criando a variável para armazenar a string que contem o conteúdo do título
-    let title = ''
 
-    // criando um contador para obter aumentar ao percorrer o objeto e encontrar o indice certo
-    let count = 0
+        /* //criando o arquivo excel
+        await pdf2excel.genXlsx(filePath, excelPath)
 
-    // percorrendo o objeto até pegar o conteúdo do titulo
-    for (let key in titleJson) {
-        if (count > 2) {
-            title += titleJson[key];
-        }
-        count++
-    }
+        //convertendo o excel em json
+        const json = await excel2json({ sourceFile: excelPath, header: { rows: 1 } })
 
-    // pegando o objeto aonde está as informações do código
-    const codeJson: { [key: string]: string } = jsonInfos[5]
+        //obtendo as informções do json
+        const jsonInfos: { A: string }[] = json.Sheet1
 
-    // criando variável para armazenar o valor do código
-    let code = ''
+        // pegando o objeto aonde estão as informações de título
+        const titleJson: { [key: string]: string } = jsonInfos[1]
 
-    // criando um contador para achar o indice certo
-    let i = 0
+        // criando a variável para armazenar a string que contem o conteúdo do título
+        let title = ''
 
-    // percorrendo o objeto até achar o valor correto
-    for (let key in codeJson) {
-        if (codeJson[key] === 'CÓDIGO:') {
-            let index = 0
-            for (let key in codeJson) {
-                if (index === i + 2) {
-                    code = codeJson[key]
-                }
-                index++
+        // criando um contador para obter aumentar ao percorrer o objeto e encontrar o indice certo
+        let count = 0
+
+        // percorrendo o objeto até pegar o conteúdo do titulo
+        for (let key in titleJson) {
+            if (count > 2) {
+                title += titleJson[key];
             }
+            count++
         }
-        i++
-    }
 
-    return { code, title }
+        // pegando o objeto aonde está as informações do código
+        const codeJson: { [key: string]: string } = jsonInfos[5]
+
+        // criando variável para armazenar o valor do código
+        let code = ''
+
+        // criando um contador para achar o indice certo
+        let i = 0
+
+        // percorrendo o objeto até achar o valor correto
+        for (let key in codeJson) {
+            if (codeJson[key] === 'CÓDIGO:') {
+                let index = 0
+                for (let key in codeJson) {
+                    if (index === i + 2) {
+                        code = codeJson[key]
+                    }
+                    index++
+                }
+            }
+            i++
+        } */
+
+        return {}
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 export const handleUploadQualityFile = async (req: Request, res: Response) => {
     try {
-        console.log('função chamada!')
+
         const orginalPath: string = path.join(__dirname, `../../_quality/${req.file?.originalname}`)
 
-        const excelPath: string = path.join(__dirname, `../../_excels/${'teste.xlsx'}`)
+        const excelPath: string = path.join(__dirname, `../../_excels/${'a.xlsx'}`)
 
         const { code, title } = await getInfosFromQAFile(orginalPath, excelPath) as { code: string, title: string }
 
-        const qaFile = await existsThisQAFile(code) as {status: boolean}
+        console.log('code: ', code)
+        /* const qaFile = await existsThisQAFile(code) as {status: boolean} */
 
-        const filePath: string = path.join(__dirname, `../../_quality/${code}.pdf`)
+        /* const filePath: string = path.join(__dirname, `../../_quality/${code}.pdf`) */
 
-        fs.renameSync(orginalPath, filePath)
+        /* fs.renameSync(orginalPath, filePath) */
 
-        if (qaFile.status) {
+        /* if (qaFile.status) {
             console.log('Já existe IT do QA com esse código')
         } else {
-            await insertQAFile(code, title, filePath)
-        }
+           
+        } */
+
+        /* await insertQAFile(code, title, filePath) */
 
 
-        fs.unlinkSync(excelPath)
-         
+        /* fs.unlinkSync(excelPath) */
+
         res.status(200).json({ code, title })
     } catch (error) {
         res.status(500).json(error)

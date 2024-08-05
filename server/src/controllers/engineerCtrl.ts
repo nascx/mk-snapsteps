@@ -14,21 +14,20 @@ import {
     updateListInEngineeringLists
 } from "../models/engineer";
 
+// para engenharia criar a listas
 export const createList = async (req: Request, res: Response) => {
     try {
-        console.log('Função chamada!')
+
         // prgando o caminho do arquivo que foi enviado
         const filePath: string = path.resolve(__dirname, `../../00_engineering_lists/${req.file?.originalname}`)
-
-        console.log("parth:", filePath)
         // convertendo o conteúdo do arquivo em json
         const jsonData = convertExcelToJsonWithoutAlterLine(filePath)
         // pegando o modelo desse conteúdo
-        const model: string = jsonData?.model ?? 'error'
+        const model: string = jsonData?.model ?? ''
         // pegando o produto desse conteúdo
-        const product: string = jsonData?.product ?? 'error'
+        const product: string = jsonData?.product ?? ''
         // pegando o conteúdo de instruções
-        const content: string = jsonData?.content ?? 'error'
+        const content: string = jsonData?.content ?? ''
         //pegando o conteúdo da linha
         const line: string = jsonData?.line ?? 'error'
         // procurando se existe uma lista na tabela de listas de engenharia com esse modelo e produto
@@ -62,5 +61,3 @@ export const createList = async (req: Request, res: Response) => {
         res.status(500).json(error)
     }
 }
-
-// para fazer upload da lista de produção

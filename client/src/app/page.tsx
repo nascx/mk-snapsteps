@@ -5,6 +5,7 @@ import AsyncSelect from 'react-select'
 import axios from 'axios'
 import { urlAPi } from '@/urlApi'
 import { ToastContainer, toast } from 'react-toastify'
+import Loading from '@/components/Loading'
 
 const postsOptions = [
     { label: '1', value: '1' },
@@ -111,6 +112,8 @@ const postsOptions = [
 
 const GetPDF = () => {
 
+    const [loading, setLoading] = useState<boolean>(false)
+
     const [modelOptions, setModelOptions] = useState()
     const [productOptions, setProductOptions] = useState()
 
@@ -149,6 +152,9 @@ const GetPDF = () => {
 
     const viewIT = async () => {
         try {
+
+            setLoading(true)
+
             const response = await axios.get(`${urlAPi}/pdf-by-post`, {
                 responseType: 'arraybuffer',
                 params: {
@@ -168,14 +174,16 @@ const GetPDF = () => {
             // Abre o PDF em uma nova aba
             window.open(pdfUrl);
 
+            setLoading(false)
         } catch (err) {
+            setLoading(false)
             toast.error("Algo deu errado, verifique se os dados selecionados estão corretos")
         }
     }
     return (
         <div className='h-screen w-full flex justify-center items-center flex-col'>
             <h2 className='text-[#284B63] text-4xl font-bold mb-2'>
-                Olá, Bem-vindo ao SnepStaps
+                Olá, Bem-vindo ao SnapSteps
             </h2>
             <h2 className='text-[#284B63] text-2xl'>
                 Selecione as opções para que seja exibida as suas instruções de trabalho
@@ -216,6 +224,11 @@ const GetPDF = () => {
             >
                 Visualizar IT
             </button>
+            {
+                loading && (
+                    <Loading />
+                )
+            }
             <ToastContainer></ToastContainer>
         </div>
     )

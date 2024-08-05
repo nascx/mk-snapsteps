@@ -7,8 +7,11 @@ import { urlAPi } from '@/urlApi'
 import { ToastContainer, toast } from 'react-toastify'
 import Navbar from '../../../components/Navbar'
 import { linksProd, linksQA, linksSGI } from '@/links'
+import Loading from '@/components/Loading'
 
 const GetPDF = () => {
+
+    const [loading, setLoading] = useState<boolean>(false)
 
     const [modelOptions, setModelOptions] = useState()
     const [productOptions, setProductOptions] = useState()
@@ -43,6 +46,7 @@ const GetPDF = () => {
 
     const viewIT = async () => {
         try {
+            setLoading(true)
             const response = await axios.get(`${urlAPi}/pdf`, {
                 responseType: 'arraybuffer',
                 params: {
@@ -60,8 +64,9 @@ const GetPDF = () => {
 
             // Abre o PDF em uma nova aba
             window.open(pdfUrl);
-
+            setLoading(false)
         } catch (err) {
+            setLoading(false)
             console.log("Erro: ", err)
             toast.error('Erro ao obter a lista, verifique se os parâmetros estão corretos ou se a IT usada já está no banco de dados!')
         }
@@ -101,6 +106,11 @@ const GetPDF = () => {
             >
                 Visualizar IT
             </button>
+            {
+                loading && (
+                    <Loading />
+                )
+            }
             <ToastContainer></ToastContainer>
         </div>
     )

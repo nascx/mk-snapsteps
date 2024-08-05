@@ -55,5 +55,5 @@ export default function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/qa/:path*', '/eng/:path*', '/prod/:path*', '/sgi/:path*', '/auth/'],
+    matcher: [/* '/qa/:path*', '/eng/:path*', '/prod/:path*', '/sgi/:path*' */ '/auth/'],
 };

@@ -23,6 +23,8 @@ snapsteps.use(express.json())
 
 snapsteps.use(cors())
 
+snapsteps.get('/auth', credentialCheck)
+
 snapsteps.post('/eng/list-upload', uploadEngineeringLists.single('list'), createList )
 
 snapsteps.get('/prod/download-list', downloadList)
@@ -47,7 +49,7 @@ snapsteps.get('/qa/get-files', sendQAFilesOptions)
 
 snapsteps.get('/qa/view-it', sendQAFile)
 
-snapsteps.get('/auth', credentialCheck)
+
 
 const port = process.env.PORT || 4322
 
