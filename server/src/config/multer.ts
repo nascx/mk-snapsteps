@@ -36,7 +36,7 @@ export const uploadProductionListsMulter = multer( { storage : storageProduction
 // para salvar as IT'S
 const storageIT = multer.diskStorage({
     destination: (req, file, callback) => {
-        const filePath : string = path.join(__dirname, '../../_its')
+        const filePath : string = path.join(__dirname, '../_its')
         callback(null, filePath)
     },
     filename: function (req, file, callback) {
