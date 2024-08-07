@@ -2,20 +2,20 @@ import { db } from "../config/db";
 
 export const getContentFromProductionList = async (model: string, product: string, line: string) => {
     try {
-        return new Promise (async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             const q = 'SELECT content FROM production_lists WHERE model = ? AND product = ? AND line = ?'
             await db.query(q, [model, product, line], (err, data) => {
                 if (err) {
                     console.log('Erro ao buscar por lista na tabela de listas de produção: ', err)
-                    reject(err)      
+                    reject(err)
                 }
                 if (data && data.length > 0) {
                     console.log('Dados obtidos com sucesso!')
                     const content = JSON.parse(data[0].content)
-                    resolve({status: true, content: content})
+                    resolve({ status: true, content: content })
                 } else {
                     console.log('Não existe uma lista na tabela de listas de produção que satizfaça essa condição.')
-                    resolve({status: false, content: []})
+                    resolve({ status: false, content: [] })
                 }
             })
         })
@@ -26,20 +26,20 @@ export const getContentFromProductionList = async (model: string, product: strin
 
 export const getContentFromEngineeringList = async (model: string, product: string) => {
     try {
-        return new Promise (async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             const q = 'SELECT content FROM engineering_lists WHERE model = ? AND product = ?'
             await db.query(q, [model, product], (err, data) => {
                 if (err) {
                     console.log('Erro ao buscar por lista na tabela de listas de engenharia: ', err)
-                    reject(err)      
+                    reject(err)
                 }
                 if (data && data.length > 0) {
                     console.log('Dados obtidos com sucesso!')
                     const content = JSON.parse(data[0].content)
-                    resolve({status: true, content: content})
+                    resolve({ status: true, content: content })
                 } else {
                     console.log('Não existe uma lista na tabela de listas de engenharia que satizfaça essa condição.')
-                    resolve({status: false, content: []})
+                    resolve({ status: false, content: [] })
                 }
             })
         })
@@ -50,19 +50,19 @@ export const getContentFromEngineeringList = async (model: string, product: stri
 
 export const searchByModelAndProductOptions = async () => {
     try {
-        const q = 'SELECT model, product FROM engineering_lists'
-        return new Promise (async (resolve, reject) => {
+        const q = 'SELECT model, product FROM production_lists'
+        return new Promise(async (resolve, reject) => {
             await db.query(q, (err, data) => {
                 if (err) {
                     console.log('Erro ao buscar por opções de Modelos e produtos')
                     reject(err)
                 }
                 if (data && data.length > 0) {
-                    const models = data.map((row: {model: string }) => {
-                        return {label: row.model, value: row.model}
+                    const models = data.map((row: { model: string }) => {
+                        return { label: row.model, value: row.model }
                     })
-                    const products = data.map((row: {product: string}) => {
-                        return {label: row.product, value: row.product}
+                    const products = data.map((row: { product: string }) => {
+                        return { label: row.product, value: row.product }
                     })
                     resolve({ models, products })
                 }
@@ -76,23 +76,45 @@ export const searchByModelAndProductOptions = async () => {
 export const searchByModelAndProductOptionsAndLine = async () => {
     try {
         const q = 'SELECT model, product, line FROM production_lists'
-        return new Promise (async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             await db.query(q, (err, data) => {
                 if (err) {
                     console.log('Erro ao buscar por opções de Modelos e produtos')
                     reject(err)
                 }
+                const models: { [key: string]: { value: string, label: string } } = {}
+
                 if (data && data.length > 0) {
-                    const models = data.map((row: {model: string }) => {
-                        return {label: row.model, value: row.model}
+                    // para opções de modelos
+                    data.map((row: { model: string }) => {
+                        if (!models[row.model]) {
+                            models[row.model] = { value: row.model, label: row.model }
+                        }
+                        return { label: row.model, value: row.model }
                     })
-                    const products = data.map((row: {product: string}) => {
-                        return {label: row.product, value: row.product}
+                    // para opções de produtos
+                    const products: { [key: string]: { value: string, label: string } } = {}
+                    data.map((row: { product: string }) => {
+                        if (!products[row.product]) {
+                            products[row.product] = { label: row.product, value: row.product }
+                        }
+                        return { label: row.product, value: row.product }
                     })
-                    const lines = data.map((row: {line: string}) => {
-                        return {label: row.line, value: row.line}
+                    const lines: { [key: string]: { value: string, label: string } } = {}
+                    data.map((row: { line: string }) => {
+                        if (!lines[row.line]) {
+                            lines[row.line] = { label: row.line, value: row.line }
+                        }
+                        return { label: row.line, value: row.line }
                     })
-                    resolve({models, products, lines})
+
+                    resolve(
+                        {
+                            models: Object.keys(models).map(key => models[key]),
+                            products: Object.keys(products).map(key => products[key]),
+                            lines: Object.keys(lines).map(key => lines[key])
+                        }
+                    )
                 }
             })
         })
@@ -128,7 +150,7 @@ export const exsitsThisListInProductionLists = (model: string, product: string, 
 // para criar uma nova lista
 export const saveNewListInProductionLists = async (model: string, product: string, line: string, content: string) => {
     try {
-        return new Promise (async (resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             const q = 'INSERT INTO production_lists (model, product, line, content) VALUES (?, ?, ?, ?)'
             await db.query(q, [model, product, line, content], (err, data) => {
                 if (err) {
@@ -147,7 +169,7 @@ export const saveNewListInProductionLists = async (model: string, product: strin
 }
 
 // para atualizar os dados na lista de produção
-export const updateListInProductionLists = ( model: string, product: string, line: string, content: string) => {
+export const updateListInProductionLists = (model: string, product: string, line: string, content: string) => {
     try {
         return new Promise(async (resolve, reject) => {
             const q = 'UPDATE production_lists SET content = ? WHERE model = ? AND product = ? AND line = ?'

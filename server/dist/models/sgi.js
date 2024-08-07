@@ -4,14 +4,14 @@
 
 
 
-var _chunkC5GCJCLCjs = require('../chunk-C5GCJCLC.js');
-require('../chunk-TUARQIGF.js');
+var _chunkJXC2HIDNjs = require('../chunk-JXC2HIDN.js');
+require('../chunk-6T4COZLA.js');
 require('../chunk-I5IDTQDI.js');
-_chunkC5GCJCLCjs.init_sgi.call(void 0, );
+_chunkJXC2HIDNjs.init_sgi.call(void 0, );
 
 
 
 
 
-exports.existsThisIT = _chunkC5GCJCLCjs.existsThisIT; exports.existsThisQAFile = _chunkC5GCJCLCjs.existsThisQAFile; exports.insertIT = _chunkC5GCJCLCjs.insertIT; exports.insertQAFile = _chunkC5GCJCLCjs.insertQAFile;
+exports.existsThisIT = _chunkJXC2HIDNjs.existsThisIT; exports.existsThisQAFile = _chunkJXC2HIDNjs.existsThisQAFile; exports.insertIT = _chunkJXC2HIDNjs.insertIT; exports.insertQAFile = _chunkJXC2HIDNjs.insertQAFile;
 //# sourceMappingURL=sgi.js.map

@@ -1,5 +1,5 @@
 import mysql from 'mysql';
 
-declare const db: mysql.Connection;
+declare const db: mysql.Pool;
 
 export { db };

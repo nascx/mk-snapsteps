@@ -17,7 +17,6 @@ import {
 // para engenharia criar a listas
 export const createList = async (req: Request, res: Response) => {
     try {
-
         // prgando o caminho do arquivo que foi enviado
         const filePath: string = path.resolve(__dirname, `../../00_engineering_lists/${req.file?.originalname}`)
         // convertendo o conteúdo do arquivo em json
@@ -29,7 +28,7 @@ export const createList = async (req: Request, res: Response) => {
         // pegando o conteúdo de instruções
         const content: string = jsonData?.content ?? ''
         //pegando o conteúdo da linha
-        const line: string = jsonData?.line ?? 'error'
+        const line: string = jsonData?.line ?? ''
         // procurando se existe uma lista na tabela de listas de engenharia com esse modelo e produto
         const existListEng = await exsitsThisListIEngineeringLists(model as string, product as string)
         if (existListEng) {

@@ -47,7 +47,7 @@ export const downloadList = async (req: Request, res: Response) => {
 
 export const getModelAndProductOptions = async (req: Request, res: Response) => {
     try {
-        const options = await searchByModelAndProductOptions()
+        const options = await searchByModelAndProductOptionsAndLine()
         res.status(200).json(options)
     } catch (error) {
         res.status(500).json(error)
@@ -58,6 +58,7 @@ export const getModelProductOptionsAndLine = async (req: Request, res: Response)
     try {
         const options = await searchByModelAndProductOptionsAndLine()
         res.status(200).json(options)
+
     } catch (error) {
         res.status(500).json(error)
     }

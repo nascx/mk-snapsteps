@@ -6,7 +6,7 @@ import path from 'path'
 // para salvar as listas de engenharia
 const storageEngineeringList = multer.diskStorage({
     destination: (req, file, callback) => {
-        const filePath : string = path.join(__dirname, '../../00_engineering_lists')
+        const filePath : string = path.join(__dirname, '../../00_production_lists')
         console.log('Função chamada!')
         callback(null, filePath)
     },

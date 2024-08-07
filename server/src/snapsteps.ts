@@ -25,7 +25,7 @@ snapsteps.use(cors())
 
 snapsteps.get('/auth', credentialCheck)
 
-snapsteps.post('/eng/list-upload', uploadEngineeringLists.single('list'), createList )
+snapsteps.post('/eng/list-upload', uploadEngineeringLists.single('list'), uploadProductionLists )
 
 snapsteps.get('/prod/download-list', downloadList)
 

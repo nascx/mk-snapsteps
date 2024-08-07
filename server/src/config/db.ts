@@ -4,9 +4,9 @@ import { config } from 'dotenv'
 
 config()
 
-export const db = mysql.createConnection({
-    host: process.env.DB_HOST || '10.12.100.14',
-    user: process.env.DB_USER || 'sysweb',
+export const db = mysql.createPool({
+    host: process.env.DB_HOST || '10.12.100.156',
+    user: process.env.DB_USER || 'root',
     database: process.env.DB_DATABASE || 'snapsteps',
-    password: process.env.DB_PASSWORD || 'ZqkNUCy9DnPjGuSG'
+    password: process.env.DB_PASSWORD || 'Helpdesk4202',
 })
