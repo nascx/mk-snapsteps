@@ -5,7 +5,7 @@ import fs from 'node:fs'
 // para pegar a página especifica da it
 export const getPage = async (it: string, pageNumber: number): Promise<Uint8Array> => {
     try {
-        const ITpath = path.resolve(__dirname, `../../_its/${it}.pdf`)
+        const ITpath = path.resolve(__dirname, `../_its/${it}.pdf`)
         const pdfBuffer = fs.readFileSync(ITpath);
         const pdfDoc = await PDFDocument.load(pdfBuffer);
         const newPdfDoc = await PDFDocument.create();
