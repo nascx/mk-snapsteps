@@ -12,6 +12,8 @@ export default function Home() {
 
   const [list, setList] = useState<File | null>(null)
 
+  const [loading, setLoading] = useState<boolean>(false)
+
   const handleListChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setList(e.target.files[0])
@@ -21,6 +23,9 @@ export default function Home() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    setLoading(true)
+
     if (!list) {
       toast.error('Nenhum arquivo foi selecionado')
     }
@@ -35,9 +40,18 @@ export default function Home() {
           "Content-Type": "multipart/form-data"
         }
       })
-        .then((res) => toast.success('Arquivo enviado com sucesso!'))
-        .catch((err) => toast.error('Erro no envio do arquivo'))
+        .then((res) => {
+          setLoading(false)
+          toast.success('Arquivo enviado com sucesso!')
+        }
+        )
+        .catch((err) => {
+          setLoading(false)
+          toast.error('Erro no envio do arquivo')
+        }
+        )
     } catch (error) {
+      setLoading(false)
       console.error({ message: 'Uploading error', error: error })
     }
   }
@@ -51,6 +65,7 @@ export default function Home() {
         descriprion="Escolha abaixo a lista para fazer upload"
         handleChange={handleListChange}
         handleSubmit={handleSubmit}
+        loading={loading}
       />
     </>
   );
