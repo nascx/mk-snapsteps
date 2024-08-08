@@ -5,6 +5,8 @@ import { urlAPi } from '@/urlApi'
 
 const useUploadFile = () => {
 
+    const [loading, setLoading] = useState<boolean>(false)
+
     const [list, setList] = useState<File | null>(null)
 
     const handleListChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -16,6 +18,7 @@ const useUploadFile = () => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        setLoading(true)
         if (!list) {
             toast.error('Nenhum arquivo foi selecionado')
         }
@@ -30,13 +33,19 @@ const useUploadFile = () => {
                     "Content-Type": "multipart/form-data"
                 }
             })
-                .then((res) => toast.success('Arquivo enviado com sucesso!'))
-                .catch((err) => toast.error('Erro no envio do arquivo'))
+                .then((res) => {
+                    toast.success('Arquivo enviado com sucesso!')
+                    setLoading(false)
+                })
+                .catch((err) => { 
+                    toast.error('Erro no envio do arquivo')
+                    setLoading(false)
+                })
         } catch (error) {
             console.error({ message: 'Uploading error', error: error })
         }
     }
-    return {handleListChange, handleSubmit}
+    return {handleListChange, handleSubmit, loading}
 }
 
 export default useUploadFile

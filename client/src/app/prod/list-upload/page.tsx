@@ -8,7 +8,7 @@ import React from 'react'
 
 const ProdUploadList = () => {
 
-  const {handleListChange, handleSubmit} = useUploadFile()
+  const {handleListChange, handleSubmit, loading} = useUploadFile()
 
   return (
     <div>
@@ -19,6 +19,7 @@ const ProdUploadList = () => {
         descriprion="Escolha abaixo a lista para fazer upload"
         handleChange={handleListChange}
         handleSubmit={handleSubmit}
+        loading={loading}
       />
     </div>
   )

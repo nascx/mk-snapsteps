@@ -1,6 +1,7 @@
 import Image from 'next/image'
-import {ChangeEvent, FormEvent, useEffect } from 'react'
+import { ChangeEvent, FormEvent, useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
+import Loading from './Loading'
 
 type UploadProps = {
     name: string,
@@ -8,16 +9,17 @@ type UploadProps = {
     descriprion: string,
     handleChange: (e: ChangeEvent<HTMLInputElement>) => void,
     handleSubmit?: (e: FormEvent<HTMLFormElement>) => void
+    loading: boolean
 }
 
-const Upload = ({ name, img, descriprion, handleChange, handleSubmit }: UploadProps) => {
+const Upload = ({ name, img, descriprion, handleChange, handleSubmit, loading }: UploadProps) => {
 
     return (
         <form
             onSubmit={handleSubmit}
             className="flex items-center justify-center flex-col mt-[100px] w-full">
             <div className="flex flex-col justify-center items-center shrink-0 mb-7 border-2 border-[#284B63] rounded-lg min-w-[400px] min-h-[250px]">
-                <Image src={img} alt='Image' width={150} height={100} className='mb-4'/>
+                <Image src={img} alt='Image' width={150} height={100} className='mb-4' />
                 <p className='text-[#284B63] font-bold'>{descriprion}</p>
             </div>
             <label className="block">
@@ -42,6 +44,11 @@ const Upload = ({ name, img, descriprion, handleChange, handleSubmit }: UploadPr
                 Enviar
             </button>
             <ToastContainer />
+            {
+                loading && (
+                    <Loading />
+                )
+            }
         </form>
     )
 }

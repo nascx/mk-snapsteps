@@ -9,6 +9,8 @@ import { ToastContainer, toast } from 'react-toastify'
 
 const SeacrQA = () => {
 
+    const [loading, setLoading] = useState<boolean>(false)
+
     const [value, setValue] = useState<string>('')
 
     const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +38,8 @@ const SeacrQA = () => {
 
     const viewIT = async (path: string) => {
         try {
+            setLoading(true)
+
             const response = await axios.get(`${urlAPi}/qa/view-it`, {
                 responseType: 'arraybuffer',
                 params: {
@@ -52,8 +56,11 @@ const SeacrQA = () => {
             // Abre o PDF em uma nova aba
             window.open(pdfUrl);
 
+            setLoading(false)
+
         } catch (err) {
             console.log("Erro: ", err)
+            setLoading(false)
             toast.error('Erro ao obter a lista, verifique se os parâmetros estão corretos ou se a IT usada já está no banco de dados!')
         }
     }

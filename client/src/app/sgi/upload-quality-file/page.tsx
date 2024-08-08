@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar'
 import { linksSGI } from '@/links'
 
 const UploadQA = () => {
-  const { handleListChange, handleSubmit } = useUploadQA()
+  const { handleListChange, handleSubmit, loading } = useUploadQA()
   return (
     <>
       <Navbar links={linksSGI}/>
@@ -17,6 +17,7 @@ const UploadQA = () => {
         descriprion="Escolha abaixo a IT da Qualidade para fazer upload"
         handleChange={handleListChange}
         handleSubmit={handleSubmit}
+        loading={loading}
       />
     </>
   )

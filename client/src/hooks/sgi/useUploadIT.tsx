@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { urlAPi } from "@/urlApi";
 
 const useUploadIT = () => {
+    const [loading, setLoading] = useState<boolean>(false)
+
     const [list, setList] = useState<File | null>(null)
 
     const handleListChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -14,6 +16,9 @@ const useUploadIT = () => {
     }
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+
+        setLoading(true)
+
         e.preventDefault()
         if (!list) {
             toast.error('Nenhum arquivo foi selecionado')
@@ -29,13 +34,19 @@ const useUploadIT = () => {
                     "Content-Type": "multipart/form-data"
                 }
             })
-                .then((res) => toast.success('Arquivo enviado com sucesso!'))
-                .catch((err) => toast.error('Erro no envio do arquivo'))
+                .then((res) => { 
+                    toast.success('Arquivo enviado com sucesso!')
+                    setLoading(false)
+                })
+                .catch((err) => { 
+                    toast.error('Erro no envio do arquivo') 
+                    setLoading(false)
+                })
         } catch (error) {
             console.error({ message: 'Uploading error', error: error })
         }
     }
-    return { handleListChange, handleSubmit }
+    return { handleListChange, handleSubmit, loading }
 }
 
 export default useUploadIT
